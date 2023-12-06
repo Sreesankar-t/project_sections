@@ -2,19 +2,16 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  name:{
+  
+ content:{
     type:String,
     required:true
   },
-  email:{
-    type:String,
-    required:true,
-  },
-  password:{
-    type:String,
-    required:true,
+  completed:{
+    type:Boolean,
+    default:false
   }
-  
+
 });
 
 const User = mongoose.model('User', userSchema);

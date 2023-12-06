@@ -1,38 +1,24 @@
-
-import express  from "express";
+import express from 'express'
 import dotenv from 'dotenv'
-import mongoose from 'mongoose'
-import userRoute from './Routes/userRoutes.js'
-import hotelRoute from './Routes/hotelRoutes.js'
+import toDoRoute from './Routes/userRoutes.js'
+import bodyParser from 'body-parser'
+import connection from './config/databaseConnection.js'
+import errorHanddler from './utility/error.js'
+import cors from 'cors'
 const app = express()
 dotenv.config()
-const PORT =process.env.PORT
-const connection = async()=>{
-    try {
-        await mongoose.connect(process.env.MONGO);
-        console.log("conneted to mongodb");
-      } catch (error) {
-        throw error;
-      }
-}
+const PORT = process.env.PORT
+
+connection()
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
 
 //middleware
 app.use(express.json())
-app.use('/api/user',userRoute)
-app.use('/api/hotel',hotelRoute)
+app.use(bodyParser.json())
 
-app.use((err,req,res,next)=>{
-  const errStatus = err.status || 500
-  const message =  err.message || "something went worng"
-  res.status(errStatus).json({
-    success:false,
-    status:errStatus,
-    message:message,
-    stack:err.stack
-  })
-})
+app.use('/toDo', toDoRoute)
+app.use(errorHanddler)
 
-app.listen(PORT,()=>{
-   console.log("connected to backend");
-   connection()
+app.listen(PORT, () => {
+  console.log(`surver is runnig port number ${PORT}`)
 })
