@@ -71,6 +71,12 @@ function App () {
   return (
     <>
       <div className='box'>
+        <div className='headdnig'>
+          <div>
+          <h1>hello todo</h1>
+          </div>
+          
+        </div>
         <div className='mainWrapper'>
           <div className='inputC'>
             <input
@@ -93,6 +99,7 @@ function App () {
           item.map((items, index) => (
             <>
               <div key={index} className='bodyWrapper'>
+                <p className='ptage'>{index+1}</p>
                 <input  value={items} className='listInput' type='text' />
 
                 <div className='btnWrapper'>
